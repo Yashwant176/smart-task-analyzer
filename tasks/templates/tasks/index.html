@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Task Analyzer</title>
+  <link rel="stylesheet" href="{% static 'tasks/styles.css' %}">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Smart Task Analyzer</h1>
+      <p class="subtitle">Intelligently score and prioritize your tasks</p>
+    </header>
+
+    <main>
+      <section class="card" id="input-section">
+        <h2>1. Add / Paste Tasks</h2>
+
+        <div class="row">
+          <form id="task-form" class="task-form" autocomplete="off">
+            <h3>Add single task</h3>
+
+            <label>Title
+              <input id="title" name="title" required placeholder="Fix login bug" />
+            </label>
+
+            <label>Due date
+              <input id="due_date" name="due_date" type="date" />
+            </label>
+
+            <label>Estimated hours
+              <input id="estimated_hours" name="estimated_hours" type="number" step="0.5" min="0" value="1" />
+            </label>
+
+            <label>Importance (1-10)
+              <input id="importance" name="importance" type="number" min="1" max="10" value="5" />
+            </label>
+
+            <label>Dependencies (comma-separated task ids)
+              <input id="dependencies" name="dependencies" placeholder="2,5" />
+            </label>
+
+            <div class="form-actions">
+              <button id="add-task-btn" type="button">Add task</button>
+              <button id="clear-form-btn" type="button" class="muted">Clear</button>
+            </div>
+          </form>
+
+          <div class="bulk-area">
+            <h3>Paste JSON array (bulk)</h3>
+            <textarea id="bulk-json" placeholder='[{"id":1,"title":"...","due_date":"2025-11-30","estimated_hours":3,"importance":8,"dependencies":[]}]'></textarea>
+            <div class="bulk-actions">
+              <button id="load-json-btn" type="button">Load JSON</button>
+              <button id="sample-btn" type="button" class="muted">Load sample</button>
+            </div>
+            <p class="hint">If both single tasks and JSON are present, JSON takes precedence.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="options-section">
+        <h2>2. Analysis Options</h2>
+        <div class="inline">
+          <label>Strategy
+            <select id="strategy">
+              <option value="smart_balance" selected>Smart Balance</option>
+              <option value="fastest_wins">Fastest Wins</option>
+              <option value="high_impact">High Impact</option>
+              <option value="deadline_driven">Deadline Driven</option>
+            </select>
+          </label>
+
+          <button id="analyze-btn" class="primary">Analyze Tasks</button>
+          <button id="suggest-btn" class="secondary">Get Suggestions</button>
+          <div id="loader" class="loader hidden" aria-hidden="true"></div>
+        </div>
+        <p id="status" class="status"></p>
+      </section>
+
+      <section class="card" id="output-section">
+        <h2>3. Results</h2>
+        <div id="results-wrapper">
+          <div id="results"></div>
+        </div>
+      </section>
+
+      <section class="card" id="suggestions-section">
+        <h2>Top suggestions (from last analysis)</h2>
+        <div id="suggestions"></div>
+      </section>
+    </main>
+
+    <footer>
+      <small>Built for the Singularium internship assignment — backend required to be running at <code>/api/tasks/*</code></small>
+    </footer>
+  </div>
+
+  <script src="{% static 'tasks/script.js' %}"></script>
+</body>
+</html>
