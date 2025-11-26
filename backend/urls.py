@@ -19,9 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # frontend: the tasks app serves the homepage at '/'
-    path('', include('tasks.urls')),               # expects tasks/urls.py to have home route
-    # API endpoints:
-    path('api/tasks/', include('tasks.api_urls')), # POST /api/tasks/analyze/  and GET /api/tasks/suggest/
+    
+    path('', include('tasks.urls')),               
+    
+    path('api/tasks/', include('tasks.api_urls')), 
 ]
 

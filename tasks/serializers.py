@@ -11,7 +11,7 @@ class InputTaskSerializer(serializers.Serializer):
     )
 
     def validate(self, data):
-        # sensible defaults
+       
         data.setdefault('estimated_hours', 1.0)
         data.setdefault('importance', 5)
         data.setdefault('dependencies', [])

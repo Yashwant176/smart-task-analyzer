@@ -4,7 +4,6 @@ from rest_framework import status
 from .serializers import InputTaskSerializer
 from .scoring import analyze_tasks, CircularDependencyError
 
-# module-level store for last analyzed results (non-persistent)
 _last_analyzed = None
 
 class AnalyzeTasksAPIView(APIView):

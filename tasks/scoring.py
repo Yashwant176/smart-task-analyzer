@@ -62,21 +62,18 @@ def analyze_tasks(task_list, strategy='smart_balance'):
     Accepts list of task dicts and returns list of tasks with 'score' and 'explanation'.
     strategy options: smart_balance, fastest_wins, high_impact, deadline_driven
     """
-    tasks = [dict(t) for t in task_list]  # defensive copy
+    tasks = [dict(t) for t in task_list]  
 
     id_map, adj = _build_maps(tasks)
 
-    # Build dependents count (how many tasks depend on this task)
     dependents_count = defaultdict(int)
     for t in tasks:
         for dep in t.get('dependencies', []):
             dependents_count[dep] += 1
 
-    # Detect circular dependencies
     if detect_cycle(adj):
         raise CircularDependencyError("Circular dependencies detected among tasks.")
 
-    # Precompute raw metrics
     urgencies = []
     importances = []
     efforts = []

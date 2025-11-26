@@ -1,10 +1,5 @@
-// script.js - Smart Task Analyzer frontend
-// Expects backend endpoints:
-// POST /api/tasks/analyze/?strategy=<strategy>
-// GET  /api/tasks/suggest/
 
 (() => {
-  // DOM refs
   const addBtn = document.getElementById('add-task-btn');
   const clearBtn = document.getElementById('clear-form-btn');
   const loadJsonBtn = document.getElementById('load-json-btn');
@@ -18,10 +13,8 @@
   const loader = document.getElementById('loader');
   const strategyEl = document.getElementById('strategy');
 
-  // In-memory tasks list (when user adds via form)
   let stagedTasks = [];
 
-  // Utilities
   function showStatus(text, isError=false){
     statusEl.textContent = text || '';
     statusEl.style.color = isError ? '#ffb4b4' : '';
@@ -38,14 +31,12 @@
     }
   }
 
-  // Priority label based on score 0..100
   function priorityLabel(score){
     if(score >= 70) return {text:'High', cls:'high'};
     if(score >= 40) return {text:'Medium', cls:'medium'};
     return {text:'Low', cls:'low'};
   }
 
-  // Render tasks
   function renderResults(tasks){
     resultsEl.innerHTML = '';
     if(!tasks || tasks.length === 0){
@@ -113,7 +104,6 @@
     });
   }
 
-  // Form handlers
   addBtn.addEventListener('click', () => {
     const title = document.getElementById('title').value.trim();
     if(!title){
@@ -126,13 +116,11 @@
     if(!importance || importance < 1) importance = 5;
     const depsRaw = document.getElementById('dependencies').value.trim();
     const dependencies = depsRaw ? depsRaw.split(',').map(s => parseInt(s.trim(),10)).filter(n => !Number.isNaN(n)) : [];
-    // assign a temporary id (so dependencies can point to it)
     const tmpId = stagedTasks.length ? Math.max(...stagedTasks.map(t=>t.id||0))+1 : 1;
     const task = { id: tmpId, title, due_date, estimated_hours, importance, dependencies };
     stagedTasks.push(task);
     showStatus(`Added task: "${title}"`);
     clearForm();
-    // show current staged tasks in results (without scores)
     renderResults(stagedTasks.map(t => ({...t, score: 0, explanation: 'Staged (not analyzed)'})));
   });
 
@@ -164,9 +152,7 @@
       showStatus('Invalid JSON: ' + err.message, true);
       return;
     }
-    // Replace stagedTasks with parsed array (best-effort)
     stagedTasks = arr.map((t,idx) => {
-      // Ensure fields exist and convert to expected shapes
       const id = (t.id !== undefined) ? t.id : (idx+1);
       return {
         id,
@@ -181,7 +167,6 @@
     renderResults(stagedTasks.map(t => ({...t, score:0, explanation: 'Loaded (not analyzed)'})));
   });
 
-  // Load sample
   sampleBtn.addEventListener('click', () => {
     const sample = [
       {"id":1,"title":"Fix login bug","due_date":null,"estimated_hours":3,"importance":8,"dependencies":[]},
@@ -192,9 +177,7 @@
     showStatus('Sample JSON loaded into paste area — click "Load JSON" to use it');
   });
 
-  // Call analyze endpoint
   async function analyze(){
-    // choose payload: if bulk JSON present and parsed, prefer stagedTasks from JSON; else use stagedTasks
     if(!stagedTasks || stagedTasks.length === 0){
       showStatus('No tasks to analyze. Add tasks or paste JSON.', true);
       return;
@@ -227,7 +210,6 @@
 
   analyzeBtn.addEventListener('click', analyze);
 
-  // Get suggestions (top 3) - this uses the last result on server
   async function getSuggestions(){
     setLoading(true);
     showStatus('Fetching suggestions...');
@@ -252,7 +234,6 @@
 
   suggestBtn.addEventListener('click', getSuggestions);
 
-  // initial state
   renderResults([]);
   renderSuggestions([]);
   showStatus('Ready — add tasks or paste JSON, then Analyze.');
