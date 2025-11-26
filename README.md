@@ -64,84 +64,57 @@ Deadline Driven | Prioritises urgent deadlines
 
 ---
 
-## 📁 Project Structure
 
-task-analyzer/
-├── backend/
-│ ├── manage.py
-│ ├── backend/
-│ └── tasks/
-│ ├── static/
-│ ├── templates/
-│ ├── tests.py
-│ ├── scoring.py
-│ ├── views.py
-│
-├── README.md
-├── requirements.txt
+## ⚙️ Smart Task Analyzer - Full Setup & Usage
 
-
----
-
-## ⚙️ Setup Instructions
-
-### 1. Clone Repository
-```bash
+## 🧬 Clone Repository & Navigate
 git clone https://github.com/Yashwant176/smart-task-analyzer.git
 cd smart-task-analyzer/backend
 
-2. Create Virtual Environment
+### 🐍 Create & Activate Virtual Environment
 python -m venv venv
 venv\Scripts\activate
 
-3. Install Dependencies
+### 📦 Install Dependencies
 pip install -r requirements.txt
 
-4. Run Server
+### 🚀 Run Development Server
 python manage.py runserver
 
+### 🌐 Open in Browser
+ http://127.0.0.1:8000/
 
-Open browser:
-
-http://127.0.0.1:8000/
-
-🧪 Run Unit Tests
+### 🧪 Run Unit Tests
 python manage.py test
 
-
-Expected output:
-
-OK
-
-🔗 API Endpoints
-Analyze Tasks
-POST /api/analyze/
+# ✅ Expected Output:
+ OK
 
 
-Accepts JSON task array and returns ranked task list with scores.
+## 🔗 API ENDPOINTS INFO
 
-Suggestions
-POST /api/suggest/
+### 📊 Analyze Tasks
+ POST /api/analyze/
+ Accepts JSON task array and returns ranked task list with scores.
+
+### 💡 Suggestions
+ POST /api/suggest/
+ Returns intelligent productivity advice based on task patterns.
 
 
-Returns intelligent productivity advice based on task patterns.
+## 🖥 UI WORKFLOW
 
+ 1. Add tasks manually OR paste JSON array
+ 2. Select strategy
+ 3. Click "Analyze Tasks"
+ 4. View ranked results + suggestions
 
-🖥 UI Workflow
+## ⚠️ Note:
+ If both manual & JSON are present → JSON takes precedence
 
-1. Add tasks manually OR paste JSON array
+##👨‍💻 Author
 
-2. Select strategy
-
-3. Click Analyze Tasks
-
-4. View ranked results + suggestions
-
-If both manual & JSON are present → JSON takes precedence.
-
-👨‍💻 Author
-
-Yashwant Kumar
+## K Yashwant Kumar
 GitHub: https://github.com/Yashwant176
 
 Portfolio: https://yashwant.is-a.dev
