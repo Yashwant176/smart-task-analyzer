@@ -112,7 +112,7 @@ python manage.py test
 ## ⚠️ Note:
  If both manual & JSON are present → JSON takes precedence
 
-##👨‍💻 Author
+## 👨‍💻 Author:
 
 ## K Yashwant Kumar
 GitHub: https://github.com/Yashwant176
